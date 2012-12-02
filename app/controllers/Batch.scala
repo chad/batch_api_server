@@ -19,7 +19,8 @@ object Batch extends Controller {
   implicit object OperationReads extends Reads[Operation] {
     def reads(json: JsValue) = Operation(
       (json \ "method").as[String],
-      (json \ "url").as[String]
+      (json \ "url").as[String],
+      (json \ "params").asOpt[Map[String,String]]
     )
   }
 
