@@ -20,22 +20,8 @@ object Batch extends Controller {
     def reads(json: JsValue) = Operation(
       (json \ "method").as[String],
       (json \ "url").as[String]
-      //(json \ "params").as[List[models.Param]]
     )
   }
-
-  //implicit object ParamListReads extends Reads[List[models.Param]] {
-    //def reads(json: JsValue) = models.Param(
-      //(json \ "name").as[String],
-      //(json \ "value").as[String]
-    //)
-  //}
-  //implicit object ParamReads extends Reads[models.Param] {
-    //def reads(json: JsValue) = models.Param(
-      //(json \ "name").as[String],
-      //(json \ "value").as[String]
-    //)
-  //}
 
   def process = Action(parse.json) { request =>
     val ops = (request.body \ "ops").asOpt[List[Operation]].map{ o =>
