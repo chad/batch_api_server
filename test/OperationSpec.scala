@@ -12,7 +12,9 @@ class OperationSpec extends Specification {
     {"method": "get",    "url": "/patrons"},
     {"method": "post",   "url": "/orders/new",  "params": {"dish_id": 123}},
     {"method": "get",    "url": "/oh/no/error", "headers": {"break": "fast"}},
-    {"method": "delete", "url": "/patrons/456"}
+    {"method": "delete", "url": "/patrons/456"},
+    {"method": "post",   "url": "/orders/new",  "params": {"dish_id": 123, "kancho": 1}}
+
   ],
   "sequential": true
 }
@@ -37,8 +39,8 @@ class OperationSpec extends Specification {
 		  val rawBody = play.api.libs.json.Json.parse(samplePost)
 		  	      val operations = Operation.fromJson(rawBody) getOrElse List()
 		  println(operations(1))
-		  operations(1).url must equalTo("/orders/new") // make sure it's the right one
-          operations(1).params must equalTo(Some(Map("dish_id" -> 123)))
+		  operations(4).url must equalTo("/orders/new") // make sure it's the right one
+          operations(4).params must equalTo(Some(Map("dish_id" -> 123, "kancho" -> 1)))
 		}
 	}
 }
