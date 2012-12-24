@@ -25,9 +25,11 @@ object Batch extends Controller {
 
   def process = Action(parse.json) { request =>
     val ops = (request.body \ "ops").asOpt[List[Operation]].map{ o =>
-     Logger.info("found an op" + o)
+     Logger.info("found an op" + o + "\n")
      o
     }
+    Logger.info(ops.toString)
+//    ops.map(_.asJson)
     Ok(toJson(ops))
   }
 
