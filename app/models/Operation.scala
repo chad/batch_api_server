@@ -2,7 +2,7 @@ package models
 import play.api.libs.json.Json._
 import play.api.libs.json.JsValue
 import play.api.libs.json._
-//case class Operation(method: String, url: String)
+
 case class Operation(method: String, url: String, params: Option[Map[String,String]]) {
 	implicit object OperationWrites extends Writes[Operation] {
 		def writes(op: Operation) = toJson(Map(
@@ -24,9 +24,6 @@ object Operation {
 				)
 	}
 	def fromJson(body:JsValue) = {
-		val ops = (body \ "ops").asOpt[List[Operation]].map{ o =>
-		o
-		}
-		ops
+		(body \ "ops").asOpt[List[Operation]]
 	}
 }
