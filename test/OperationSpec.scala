@@ -30,7 +30,6 @@ class OperationSpec extends Specification {
 	    }
 		"be writable as JSON" in {
 		  val o = Operation("get", "/foo/bar", None)
-		  println(o.asJson())
 	      o.asJson().toString must contain("""{"method":""")
 		}
 	}

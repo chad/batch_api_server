@@ -15,21 +15,9 @@ object Batch extends Controller {
     ))
   }
 
-  implicit object OperationReads extends Reads[Operation] {
-    def reads(json: JsValue) = Operation(
-      (json \ "method").as[String],
-      (json \ "url").as[String],
-      (json \ "params").asOpt[Map[String,String]]
-    )
-  }
-
   def process = Action(parse.json) { request =>
-    val ops = (request.body \ "ops").asOpt[List[Operation]].map{ o =>
-     Logger.info("found an op" + o + "\n")
-     o
-    }
-    Logger.info(ops.toString)
-//    ops.map(_.asJson)
+    val ops = Operation.fromJson(request.body)
+    
     Ok(toJson(ops))
   }
 
