@@ -1,0 +1,2 @@
+#!/bin/bash
+ab -c 2 -n 1000 -p post-data.txt  -T "application/json" http://localhost:9000/batch
