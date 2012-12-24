@@ -6,7 +6,6 @@ import play.api.libs.json.Json._
 import play.api.libs.json.JsValue
 import play.api.libs.json._
 import models.Operation
-import models.Param
 
 object Batch extends Controller {
   implicit object OperationWrites extends Writes[Operation] {
