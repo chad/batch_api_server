@@ -8,17 +8,13 @@ import play.api.libs.json._
 import models.Operation
 
 object Batch extends Controller {
-  implicit object OperationWrites extends Writes[Operation] {
-    def writes(op: Operation) = toJson(Map(
-      "method" -> toJson(toJson(op.method)),
-      "url" -> toJson(toJson(op.url))
-    ))
-  }
 
   def process = Action(parse.json) { request =>
-    val ops = Operation.fromJson(request.body)
-    
-    Ok(toJson(ops))
+    val ops = Operation.fromJson(request.body) getOrElse List()
+    val json = ops.map { op => op.asJson }
+    val jsonResponse = "[" + json.mkString(",") + "]"
+    Ok(jsonResponse)
   }
+  
 
 }
