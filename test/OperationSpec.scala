@@ -42,5 +42,12 @@ class OperationSpec extends Specification {
 		  operations(4).url must equalTo("/orders/new") // make sure it's the right one
           operations(4).params must equalTo(Some(Map("dish_id" -> 123, "kancho" -> 1)))
 		}
+		
+		"be able to parse params with arbitrary value types (or at least String, Int Boolean) into Map of String" in {
+
+		  
+		  "hello".toLowerCase() must contain("need to be able to turn an arbitrary map of json objects into a scala map")
+		}
+		
 	}
 }
