@@ -29,8 +29,16 @@ class OperationSpec extends Specification {
 
 	    }
 		"be writable as JSON" in {
-		  val o = Operation("get", "/foo/bar", None)
+		  val o = Operation("get", "/foo/bar", Some(Map()))
 	      o.asJson().toString must contain("""{"method":""")
+		}
+		
+		"be able to parse params" in {
+		  val rawBody = play.api.libs.json.Json.parse(samplePost)
+		  	      val operations = Operation.fromJson(rawBody) getOrElse List()
+		  println(operations(1))
+		  operations(1).url must equalTo("/orders/new") // make sure it's the right one
+          operations(1).params must equalTo(Some(Map("dish_id" -> 123)))
 		}
 	}
 }
