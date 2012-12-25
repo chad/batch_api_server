@@ -12,3 +12,16 @@ Batch API server in Scala/Play.
   ],
   sequential: true
 }
+
+
+Here's my terrible workflow for playing with it so far:
+
+$ play run
+
+# another window
+
+$ rackup echo.ru
+
+# another window
+
+$ bash r.sh
