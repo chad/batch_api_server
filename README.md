@@ -1,5 +1,6 @@
 Batch API server in Scala/Play.
 
+<pre>
 # POST /batch
 # Content-Type: application/json
 
@@ -12,6 +13,7 @@ Batch API server in Scala/Play.
   ],
   sequential: true
 }
+</pre>
 
 
 Here's my terrible workflow for playing with it so far:
