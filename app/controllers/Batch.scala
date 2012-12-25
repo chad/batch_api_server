@@ -13,9 +13,9 @@ object Batch extends Controller {
   def process = Action(parse.json) { request =>
     val ops = Operation.fromJson(request.body) getOrElse List()
     val responses = ops.map { op =>
-      val response = WS.url("http://localhost:9292" + op.url).post(op.asJson)
-    }.mkString("\n")
-    Ok(responses)
+      WS.url("http://localhost:9292" + op.url).post(op.asJson)
+    }
+    Ok(responses.map(_.value.get.body).mkString("\n"))
   }
   
 
