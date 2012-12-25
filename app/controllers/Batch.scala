@@ -13,7 +13,13 @@ object Batch extends Controller {
   def process = Action(parse.json) { request =>
     val ops = Operation.fromJson(request.body) getOrElse List()
     val responses = ops.map { op =>
-      WS.url("http://localhost:9292" + op.url).post(op.asJson)
+      val url = WS.url("http://localhost:9292" + op.url)
+      op.method match {
+        case "post" => url.post(op.asJson)
+        case "get" => url.get() // FIXME: params
+        case "put" => url.put(op.asJson)
+        case "delete" => url.delete
+      }
     }
     Ok(responses.map(_.value.get.body).mkString("\n"))
   }
