@@ -5,7 +5,7 @@ import play.api.test.Helpers._
 import play.api.libs.json.JsString
 
 class OperationSpec extends Specification {
-  val samplePost = """
+	val samplePost = """
 			{
 			"ops": [
 			{"method": "get",    "url": "/patrons"},
@@ -20,27 +20,33 @@ class OperationSpec extends Specification {
 			}
 			"""
 
-  "An Operation" should {
+			"An Operation" should {
 
-    "be parsable from JSON" in {
-      val rawBody = play.api.libs.json.Json.parse(samplePost)
-      val operations = Operation.fromJson(rawBody) getOrElse List()
+		"be parsable from JSON" in {
+			val rawBody = play.api.libs.json.Json.parse(samplePost)
+					val operations = Operation.fromJson(rawBody) getOrElse List()
 
-      operations(0).url must equalTo("/patrons")
-      operations(3).url must equalTo("/patrons/456")
+			operations(0).url must equalTo("/patrons")
+			operations(3).url must equalTo("/patrons/456")
 
-    }
-    "be writable as JSON" in {
-      val o = Operation("get", "/foo/bar", Some(Map()))
-      o.asJson().toString must contain("""{"method":""")
-    }
+		}
+		"be writable as JSON" in {
+			val o = Operation("get", "/foo/bar", Some(Map()), Some(Map()))
+					o.asJson().toString must contain("""{"method":""")
+		}
 
-    "be able to parse params" in {
-      val rawBody = play.api.libs.json.Json.parse(samplePost)
-      val operations = Operation.fromJson(rawBody) getOrElse List()
-      operations(5).params.get("a_string") must equalTo(JsString("o hello"))
-      //			(Some(Map("dish_id" -> 123, "a_string" -> "1")))
-    }
+		"be able to parse params" in {
+			val rawBody = play.api.libs.json.Json.parse(samplePost)
+			val operations = Operation.fromJson(rawBody) getOrElse List()
+			operations(5).params.get("a_string") must equalTo(JsString("o hello"))
+			//			(Some(Map("dish_id" -> 123, "a_string" -> "1")))
+		}
+		
+		"be able to parse headers" in {
+			val rawBody = play.api.libs.json.Json.parse(samplePost)
+			val operations = Operation.fromJson(rawBody) getOrElse List()
+			operations(2).headers.get("break") must equalTo(JsString("fast"))
+		}
 
-  }
+	}
 }
