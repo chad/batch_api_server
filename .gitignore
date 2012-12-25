@@ -2,6 +2,7 @@ logs
 project/project
 project/target
 target
+.target
 tmp
 .history
 dist
@@ -12,3 +13,6 @@ dist
 /.classpath
 /.project
 /RUNNING_PID
+.cache
+.settings
+bin
