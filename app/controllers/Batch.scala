@@ -9,11 +9,20 @@ import play.api.libs.ws._
 import models.Operation
 
 object Batch extends Controller {
-
+  
+  /* Crappy hack */
+  def externalServiceUrl = {
+//    val r = new scala.util.Random
+//    val ports = List(9292, 9293)
+//    "http://localhost:" + ports(r.nextInt(2))
+    "http://localhost:9292"
+  }
+  
   def process = Action(parse.json) { request =>
+    
     val ops = Operation.fromJson(request.body) getOrElse List()
     val responses = ops.map { op =>
-      val url = WS.url("http://localhost:9292" + op.url)
+      val url = WS.url(externalServiceUrl + op.url)
       op.method match {
         case "post" => url.post(op.asJson)
         case "get" => url.get() // FIXME: params
