@@ -47,6 +47,8 @@ class OperationSpec extends Specification {
 			val operations = Operation.fromJson(rawBody) getOrElse List()
 			operations(2).headers.get("break") must equalTo(JsString("fast"))
 		}
+		
+		
 
 	}
 }

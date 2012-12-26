@@ -7,6 +7,7 @@ import play.api.libs.json.JsValue
 import play.api.libs.json._
 import play.api.libs.ws._
 import models.Operation
+import models.BatchRequest
 
 object Batch extends Controller {
   
@@ -20,15 +21,17 @@ object Batch extends Controller {
   
   def process = Action(parse.json) { request =>
     
-    val ops = Operation.fromJson(request.body) getOrElse List()
+    val batchRequest = BatchRequest.fromJson(request.body)
+    val ops = batchRequest.ops
     val responses = ops.map { op =>
       val url = WS.url(externalServiceUrl + op.url)
-      op.method match {
+      val response = op.method match {
         case "post" => url.post(op.asJson)
         case "get" => url.get() // FIXME: params
         case "put" => url.put(op.asJson)
         case "delete" => url.delete
       }
+      response
     }
     Ok(responses.map(_.value.get.body).mkString("\n"))
   }
