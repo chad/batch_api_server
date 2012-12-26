@@ -31,9 +31,9 @@ object Batch extends Controller {
         case "put" => url.put(op.asJson)
         case "delete" => url.delete
       }
-      response
+      response.value.get
     }
-    Ok(responses.map(_.value.get.body).mkString("\n"))
+    Ok(responses.map(_.body).mkString("\n"))
   }
   
 
