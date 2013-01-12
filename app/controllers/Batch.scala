@@ -10,7 +10,13 @@ import models.Operation
 import models.BatchRequest
 
 object Batch extends Controller {
-  
+
+
+  trait WSResult
+  case class SyncResult(response: play.api.libs.ws.Response) extends WSResult
+  case class AsyncResult(response: play.api.libs.concurrent.Promise[play.api.libs.ws.Response]) extends WSResult
+
+
   /* Crappy hack */
   def externalServiceUrl = {
 //    val r = new scala.util.Random
@@ -18,9 +24,9 @@ object Batch extends Controller {
 //    "http://localhost:" + ports(r.nextInt(2))
     "http://localhost:9292"
   }
-  
+
   def process = Action(parse.json) { request =>
-    
+    val serial = true //FIXME: get from json body
     val batchRequest = BatchRequest.fromJson(request.body)
     val ops = batchRequest.ops
     val responses = ops.map { op =>
@@ -31,10 +37,19 @@ object Batch extends Controller {
         case "put" => url.put(op.asJson)
         case "delete" => url.delete
       }
-      response.value.get
+      
+      if( serial ) {
+        new SyncResult(response.value.get)
+      } else {
+        new AsyncResult(response)
+      }
     }
-    Ok(responses.map(_.body).mkString("\n"))
+   val body = responses.map { 
+     case SyncResult(result) => result.body
+     case AsyncResult(result) => result.value.get.body
+     }.mkString("\n")
+    Ok(body)
   }
-  
+
 
 }
