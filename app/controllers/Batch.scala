@@ -26,7 +26,6 @@ object Batch extends Controller {
   }
 
   def process = Action(parse.json) { request =>
-    val serial = true //FIXME: get from json body
     val batchRequest = BatchRequest.fromJson(request.body)
     val ops = batchRequest.ops
     val responses = ops.map { op =>
@@ -38,7 +37,7 @@ object Batch extends Controller {
         case "delete" => url.delete
       }
       
-      if( serial ) {
+      if( batchRequest.sequential ) {
         new SyncResult(response.value.get)
       } else {
         new AsyncResult(response)
