@@ -8,6 +8,8 @@ import play.api.libs.json._
 import play.api.libs.ws._
 import models.Operation
 import models.BatchRequest
+import models.BatchResponse
+import models.BatchResult
 
 object Batch extends Controller {
   trait WSResult
@@ -36,11 +38,11 @@ object Batch extends Controller {
       
       if( batchRequest.sequential ) new SyncResult(response.value.get) else new AsyncResult(response)
     }
-   val body = responses.map { 
-     case SyncResult(result) => result.body
-     case AsyncResult(result) => result.value.get.body
-     }.mkString("\n")
-    Ok(body)
+   val batchResponse = new BatchResponse(responses.map { 
+     case SyncResult(result) => BatchResult(result.status, result.body, Map("FIXME" -> "This is hard-coded")) 
+     case AsyncResult(result) => BatchResult(result.value.get.status, result.value.get.body, Map("FIXME" -> "This is hard-coded"))
+     })
+    Ok(batchResponse.asJson)
   }
 
 
