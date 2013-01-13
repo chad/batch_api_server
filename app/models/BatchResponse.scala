@@ -8,7 +8,9 @@ case class BatchResult(status:Int, body: String, headers: Map[String,String])
 object BatchResult {
   implicit object BatchResultWriter extends Writes[BatchResult] {
     def writes(batchResult: BatchResult)  = toJson(
-        Map("status" -> toJson(batchResult.status), "body" -> toJson(batchResult.body))
+        Map("status" -> toJson(batchResult.status), 
+            "body" -> toJson(batchResult.body), 
+            "headers" -> toJson(batchResult.headers))
         )
   }
 }
