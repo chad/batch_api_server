@@ -1,5 +1,15 @@
 Batch API server in Scala/Play.
 
+It's a service implementation of Alex Koppel's  Batch API:
+
+https://github.com/arsduo/batch_api
+
+It's not done yet. It does, however, support changing the "sequential" flag, which is kinda cool.
+
+The response output isn't correct, and it doesn't pass through all info the backend service correctly.  Ideally, you could also configure endpoints to hit for various services. For now it assumes they're all on the same host and port (localhost:9292) for convenience during development.
+
+
+
 <pre>
 # POST /batch
 # Content-Type: application/json
