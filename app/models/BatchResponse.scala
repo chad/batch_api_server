@@ -18,7 +18,7 @@ object BatchResult {
 case class BatchResponse(results: List[BatchResult]) {
 	implicit object BatchResponseWriter extends Writes[BatchResponse] {
 		def writes(batchResponse: BatchResponse) = toJson(Map(
-				"results" -> batchResponse.results.map(toJson(_)).mkString(" ") 
+				"results" -> batchResponse.results 
 				))
 	}
 	def asJson = {
