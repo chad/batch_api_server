@@ -37,11 +37,7 @@ object Batch extends Controller {
         case "delete" => url.delete
       }
       
-      if( batchRequest.sequential ) {
-        new SyncResult(response.value.get)
-      } else {
-        new AsyncResult(response)
-      }
+      if( batchRequest.sequential ) new SyncResult(response.value.get) else new AsyncResult(response)
     }
    val body = responses.map { 
      case SyncResult(result) => result.body
