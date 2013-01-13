@@ -10,7 +10,8 @@ The response output isn't correct, and it doesn't pass through all info the back
 
 
 
-<pre>
+```
+
 # POST /batch
 # Content-Type: application/json
 
@@ -23,17 +24,23 @@ The response output isn't correct, and it doesn't pass through all info the back
   ],
   sequential: true
 }
-</pre>
+```
 
+
+
+## Running
 
 Here's my terrible workflow for playing with it so far:
 
+```
 $ play run
-
-# another window
-
+```
+### another window
+```
 $ rackup echo.ru
+```
+### another window
 
-# another window
-
+```
 $ bash r.sh
+```
