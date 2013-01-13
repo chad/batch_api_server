@@ -6,8 +6,8 @@ import play.api.libs.json._
 case class Operation(method: String, url: String, params: Option[Map[String, Any]], headers: Option[Map[String,Any]]) {
 	implicit object OperationWrites extends Writes[Operation] {
 		def writes(op: Operation) = toJson(Map(
-				"method" -> toJson(toJson(op.method)),
-				"url" -> toJson(toJson(op.url))
+				"method" -> toJson(op.method),
+				"url" -> toJson(op.url)
 				))
 	}
 	def asJson() = {

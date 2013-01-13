@@ -10,12 +10,9 @@ import models.Operation
 import models.BatchRequest
 
 object Batch extends Controller {
-
-
   trait WSResult
   case class SyncResult(response: play.api.libs.ws.Response) extends WSResult
   case class AsyncResult(response: play.api.libs.concurrent.Promise[play.api.libs.ws.Response]) extends WSResult
-
 
   /* Crappy hack */
   def externalServiceUrl = {
