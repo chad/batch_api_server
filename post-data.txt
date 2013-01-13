@@ -5,5 +5,5 @@
     {"method": "get",    "url": "/oh/no/error", "headers": {"break": "fast"}},
     {"method": "delete", "url": "/patrons/456"}
   ],
-  "sequential": true
+  "sequential": false
 }
