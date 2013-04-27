@@ -1,0 +1,48 @@
+{
+    "ops": [{
+        "url": "me",
+        "method": "GET",
+        "params": {
+            "since": "1364296630"
+        }
+    }, {
+        "url": "me/friends",
+        "method": "GET",
+        "params": {}
+    }, {
+        "url": "me/settings",
+        "method": "GET",
+        "params": {
+            "since": "1364296630"
+        }
+    }, {
+        "url": "me/lists",
+        "method": "GET",
+        "params": {
+            "since": "1364296630"
+        }
+    }, {
+        "url": "me/tasks",
+        "method": "GET",
+        "params": {}
+    }, {
+        "url": "me/reminders",
+        "method": "GET",
+        "params": {}
+    }, {
+        "url": "me/shares",
+        "method": "GET",
+        "params": {}
+    }, {
+        "url": "me/services",
+        "method": "GET",
+        "params": {}
+    }, {
+        "url": "me/events",
+        "method": "GET",
+        "params": {
+            "locale": "en"
+        }
+    }],
+    "sequential": "true"
+}

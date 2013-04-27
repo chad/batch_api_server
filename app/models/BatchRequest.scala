@@ -9,6 +9,6 @@ case class BatchRequest(ops: List[Operation], sequential: Boolean)
 object BatchRequest {
   def fromJson(body: JsValue) = {
     BatchRequest((body \ "ops").as[List[Operation]],
-        (body \ "sequential").as[Boolean])
+        (body \ "sequential").as[String].toBoolean)
   }
 }
